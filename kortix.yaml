@@ -1,0 +1,70 @@
+# yaml-language-server: $schema=https://kortix.com/schema/kortix.v2.schema.json
+#
+# Kortix project manifest — the governance half of an agent harness.
+# `kortix_version` pins the schema. v2 manifests are YAML-only with one
+# `agents:` map per project: connectors/secrets/kortix_permissions/skills/
+# workspace/enabled, plus `file`, the path of the agent's `.md`. Everything
+# about how an agent behaves lives in that file's frontmatter and body.
+#
+# Layout — harness-neutral content at the root:
+#   agents/<name>.md          one file per agent (`agents.<name>.file`)
+#   skills/<name>/SKILL.md    skills, loaded by every harness
+#   memory/                   the project brain
+#   tools/<name>.ts           project tools, loaded by every harness
+#   harnesses/<impl>/         files only that harness implementation reads
+kortix_version: 2
+
+default_agent: release-notes
+
+project:
+  name: kortix-harness-config
+  description: Two agents, their grants, and a trigger — the harness configuration a Kortix project boots into.
+
+env:
+  required: [RELEASE_TAG_FROM, RELEASE_TAG_TO]
+  optional: [CHANGELOG_PATH]
+
+agents:
+  release-notes:
+    file: agents/release-notes.md
+    # Reads the repository and runs git. No connectors: a changelog needs no
+    # outside system. No secrets: the two tag names are the only inputs.
+    connectors: none
+    secrets: none
+    kortix_permissions: all
+    skills: [release-notes]
+    tools: [read, grep, bash, write, show]
+    workspace: { project_repository: true }
+
+  repo-auditor:
+    file: agents/repo-auditor.md
+    # Read-only by grant, not only by prompt: no write tool is listed and no
+    # connector or secret is granted, so a stray instruction cannot widen it.
+    connectors: none
+    secrets: none
+    kortix_permissions: all
+    skills: none
+    tools: [read, grep, bash]
+    workspace: { project_repository: true }
+
+# ─── Triggers ────────────────────────────────────────────────────────────
+# Each entry spawns a fresh session that runs `prompt` as its first message.
+# Slugs are lowercase, URL-safe and unique per project. `agent` must name a
+# declared agent above (or be omitted to fall back to `default_agent`).
+
+triggers:
+  # Monday morning: draft the changelog for the week and open a change
+  # request. Disabled by default — every run boots a sandbox.
+  - slug: weekly-release-notes
+    name: Weekly release notes
+    type: cron
+    agent: release-notes
+    enabled: false
+    cron: "0 0 8 * * 1" # 08:00 Monday, six fields
+    timezone: UTC
+    prompt: |
+      Draft the release notes for the commits between the two tags named in
+      RELEASE_TAG_FROM and RELEASE_TAG_TO. Group them by user-visible change,
+      drop internal refactors that change no behaviour, and write the result
+      to notes/ the `release-notes` skill names. Open a change request; do
+      not merge it.
