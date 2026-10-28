@@ -17,6 +17,8 @@ An agent harness is the runtime that turns a model into an agent that can do wor
 
 The split is the point. `kortix.yaml` decides what an agent may touch; the agent file decides how it works; `harnesses/` holds anything loop-specific, so replacing the loop does not touch the grants.
 
+OpenAI publishes the Codex loop, so [the Codex harness](https://agentharnessguide.com/codex-harness) can be read before anyone swaps it in. Its approval rules come from configuration on whatever machine runs it, and its session record stays there too. Anthropic's Claude Code takes the configured route instead: the loop is Anthropic's, and what a team changes sits in settings files. [The Claude Code harness](https://agentharnessguide.com/claude-code-harness) explains the four places those settings come from, including the local file the tool writes itself after a single approval. In neither setup does a permission change reach a reviewer as a diff by default, which is why the grants live in `kortix.yaml` here.
+
 ## The two agents here
 
 `release-notes` drafts a changelog from the commits between two tags, writes it to `notes/`, and opens a change request. It reads the repository and runs `git`, and it holds no connectors and no project secrets, because a changelog needs neither.
@@ -38,6 +40,8 @@ Every session runs in its own isolated sandbox, as an ephemeral branch of this r
 ## The parts of a harness this repo does not settle
 
 The loop itself. A harness compensates for what a model cannot do yet, so the loop is the half that moves as models improve, and the manifest is the half you keep. If your grants are in a git repo, a loop upgrade is a code change and a grant change is a review.
+
+A harness can be open at the loop and closed in the team layer above it, and which of the two you own decides whether a swap is a code change or a migration. [The open-source agent harness guide](https://agentharnessguide.com/open-source-agent-harness) starts from that split. Where the record lands once a session closes is the difference [the harness comparison](https://agentharnessguide.com/agent-harness-comparison) draws across four runtimes: a local store, a service database, or a commit. Here it lands in a commit.
 
 More on the four shapes of harness and where each one keeps its boundaries: [what an agent harness owns](https://agentharnessguide.com/).
 
