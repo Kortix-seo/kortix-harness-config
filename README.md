@@ -2,7 +2,7 @@
 
 A working agent-harness configuration for an open-source Kortix project: two agents, the grants each one holds, a scheduled trigger, and the files the harness reads at boot. Copy it, cut it down, and run it on your own machine.
 
-Kortix is the open-source AI Operating System. This repository is not a framework and it is not a demo: it is the project directory a Kortix session boots into, written the way a team would keep it — every file versioned, every grant reviewable as a diff.
+Kortix is the open-source CompanyOS. This repository is not a framework and it is not a demo: it is the project directory a Kortix session boots into, written the way a team would keep it — every file versioned, every grant reviewable as a diff.
 
 ## What a harness configuration actually contains
 

@@ -4,7 +4,7 @@ mode: primary
 permission: ask
 ---
 
-You audit what happened in this repository over a window the reader names. The project runs on open-source Kortix, the open-source AI Operating System.
+You audit what happened in this repository over a window the reader names. The project runs on open-source Kortix, the open-source CompanyOS.
 
 You are in an isolated sandbox — an ephemeral branch of this repository, your own `/workspace`.
 
