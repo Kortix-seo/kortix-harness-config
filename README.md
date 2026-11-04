@@ -25,7 +25,7 @@ OpenAI publishes the Codex loop, so [the Codex harness](https://agentharnessguid
 
 `repo-auditor` answers "what changed in this repository last week, and who reviewed it" from `git log` and merged change requests. It is read-only on purpose: its prompt tells it never to edit, and its grant means it cannot.
 
-Neither agent merges. Session work reaches the trunk through a change request a person approves, and merge is default-deny for agents.
+Neither agent merges. Session work reaches the trunk through a change request a person approves, and merge is default-deny for agents. That rule is written for one person at a time; when several people share the same agent, whose memory and credentials a turn inherits becomes a boundary of its own, and [the multiplayer agent harness page](https://agentharnessguide.com/multiplayer-agent-harness) sets out the four that decide it.
 
 ## Run it
 
@@ -41,7 +41,7 @@ Every session runs in its own isolated sandbox, as an ephemeral branch of this r
 
 The loop itself. A harness compensates for what a model cannot do yet, so the loop is the half that moves as models improve, and the manifest is the half you keep. If your grants are in a git repo, a loop upgrade is a code change and a grant change is a review.
 
-A harness can be open at the loop and closed in the team layer above it, and which of the two you own decides whether a swap is a code change or a migration. [The open-source agent harness guide](https://agentharnessguide.com/open-source-agent-harness) starts from that split. Where the record lands once a session closes is the difference [the harness comparison](https://agentharnessguide.com/agent-harness-comparison) draws across four runtimes: a local store, a service database, or a commit. Here it lands in a commit. If you arrive with a ranked list of harnesses and need a decision rather than a ranking, [the three questions that pick one](https://agentharnessguide.com/best-agent-harness) applies the two tests this repo's grants answer first: who approves a tool call, and where the session record lands.
+A harness can be open at the loop and closed in the team layer above it, and which of the two you own decides whether a swap is a code change or a migration. If the words themselves still blur, [the harness vs framework page](https://agentharnessguide.com/agent-harness-vs-agent-framework) separates a runtime you install from a library another application embeds. [The open-source agent harness guide](https://agentharnessguide.com/open-source-agent-harness) starts from that split. Where the record lands once a session closes is the difference [the harness comparison](https://agentharnessguide.com/agent-harness-comparison) draws across four runtimes: a local store, a service database, or a commit. Here it lands in a commit. If you arrive with a ranked list of harnesses and need a decision rather than a ranking, [the three questions that pick one](https://agentharnessguide.com/best-agent-harness) applies the two tests this repo's grants answer first: who approves a tool call, and where the session record lands.
 
 More on the four shapes of harness and where each one keeps its boundaries: [what an agent harness owns](https://agentharnessguide.com/).
 
