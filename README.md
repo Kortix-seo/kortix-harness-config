@@ -30,7 +30,7 @@ Neither agent merges. Session work reaches the trunk through a change request a 
 ## Run it
 
 ```bash
-git clone https://github.com/kortix-ai/suna    # the Kortix source, for reference
+git clone https://github.com/kortix-ai/CompanyOS    # the Kortix source, for reference
 ```
 
 Then create a Kortix project from this directory (Kortix CLI, or the project importer in Kortix Cloud), set the two secrets the `release-notes` agent needs in Kortix Secrets, and start a session with `release-notes` as its agent. The manifest's `env.required` list is what the platform checks before a session boots.
@@ -47,5 +47,5 @@ More on the four shapes of harness and where each one keeps its boundaries: [wha
 
 ## Project files
 
-- [Kortix on GitHub](https://github.com/kortix-ai/suna) — the source of the runtime these files boot into
+- [Kortix on GitHub](https://github.com/kortix-ai/CompanyOS) — the source of the runtime these files boot into
 - [kortix.com](https://kortix.com) — the product, documentation and self-host instructions
